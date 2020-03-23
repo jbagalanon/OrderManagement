@@ -32,7 +32,15 @@ namespace Taste
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+           
+
+            //add mvc
+            services.AddMvc(options =>
+                    options.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
 
         }
 
@@ -59,10 +67,9 @@ namespace Taste
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
+
+            //delete endpoint routing considering mvc have both razor and mvc embedded 
+            app.UseMvc();
         }
     }
 }

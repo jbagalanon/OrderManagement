@@ -21,4 +21,11 @@
     <ProjectReference Include="..\Taste.DataAccess\Taste.DataAccess.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Pages\Admin\" />
+    <Folder Include="Pages\Customer\Home\" />
+    <Folder Include="Pages\Customer\Cart\" />
+  </ItemGroup>
+
 </Project>
