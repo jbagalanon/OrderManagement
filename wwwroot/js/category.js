@@ -7,7 +7,7 @@ $(document).ready(function () {
 
 function loadList() {
 
-    dataTable = $('#DT_load').dataTable(
+    dataTable = $('#DT_load').DataTable(
         {
             "ajax": {
                 "url": "/api/category",

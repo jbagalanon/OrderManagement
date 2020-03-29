@@ -12,7 +12,6 @@ namespace Taste.Pages.Admin.Category
     {
 
         private readonly IUnitOfWork _unitOfWork;
-
         public UpsertModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
