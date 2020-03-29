@@ -17,12 +17,12 @@ function loadList() {
 
             "columns": [
                 { "data": "name", "width": "40%" },
-                { "data": "name", "width": "40%" },
+                { "data": "displayOrder", "width": "30%" },
                 {
                     "data": "id",
                     "render": function(data) {
                         return ` <div class ="text-center">
-                            <a href="/Admin/category/upsert?"id=${data}" 
+                            <a href="/Admin/category/upsert?id=${data}" 
                             class="btn btn-danger text-white style="cursor:pointer; width:100px;">
                                 <i class="far fa-trash-alt"></i>
                                 </a>
