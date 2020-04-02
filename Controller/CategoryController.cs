@@ -26,5 +26,22 @@ namespace Taste.Controller
         {
             return Json(new {data = _unitOfWork.Category.GetAll()});
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete (int id)
+        {
+            var objFromDb = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
+
+            if (objFromDb == null)
+            {
+                return Json(new {success = false, message = "Error While Deleting"});
+            }
+            else
+            {
+                _unitOfWork.Category.Remove(objFromDb);
+                _unitOfWork.Save();
+                return Json(new {success = true, message = "Files Deleted Successfully"});
+            }
+        }
     }
 }

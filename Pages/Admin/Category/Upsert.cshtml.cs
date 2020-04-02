@@ -37,6 +37,7 @@ namespace Taste.Pages.Admin.Category
             return Page();
         }
 
+
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
