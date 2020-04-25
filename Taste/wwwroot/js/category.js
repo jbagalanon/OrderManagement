@@ -27,7 +27,7 @@ function loadList() {
                                 </a>
 
                             <a class="btn btn-danger text-white" style="cursor:pointer; width:100px;" 
-                                onclick=Delete('/api/category/'+${data}>
+                                onclick=Delete("/api/category/${data}")>
                                 <i class="far fa-trash-alt">&nbsp</i>Delete
                                 </a>
                         </div>`;
@@ -45,8 +45,8 @@ function loadList() {
 
 function Delete(url) {
     swal({
-        title: "Are you sure you want to delete",
-        text: "Tou cannot retrieve data!",
+        title: "Are you sure you want to delete?",
+        text: "You will not be able to retrieve the file!",
         icon: "warning",
         buttons: true,
         dangerMode: true
@@ -68,3 +68,4 @@ function Delete(url) {
         }
     });
 }
+
