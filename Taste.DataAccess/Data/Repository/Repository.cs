@@ -26,7 +26,7 @@ namespace Taste.DataAccess.Data.Repository
 
         public T Get(int id)
         {
-            throw new NotImplementedException();
+            return dbSet.Find(id);
         }
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {

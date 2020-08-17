@@ -21,9 +21,9 @@ function loadList() {
                     "data": "id",
                     "render": function (data) {
                         return ` <div class ="text-center">
-                            <a href="/Admin/category/upsert?id=${data}" 
+                            <a href="/Admin/category/upsert id?=${data}" 
                                 class="btn btn-success text-white" style="cursor:pointer; width:100px;">
-                                <i class="far fa-edit">&nbsp</i>Edit
+                                <i class="far fa-edit"></i>Edit
                                 </a>
 
                             <a class="btn btn-danger text-white" style="cursor:pointer; width:100px;" 
@@ -67,5 +67,11 @@ function Delete(url) {
             });
         }
     });
+}
+
+
+function ShowMessage(msg) {
+    toastr.success(msg);
+
 }
 

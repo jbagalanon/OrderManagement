@@ -27,6 +27,8 @@ namespace Taste.Controller
             return Json(new {data = _unitOfWork.Category.GetAll()});
         }
 
+
+
         [HttpDelete("{id}")]
         public IActionResult Delete (int id)
         {
@@ -42,6 +44,7 @@ namespace Taste.Controller
                 _unitOfWork.Save();
                 return Json(new {success = true, message = "Files Deleted Successfully"});
             }
+
         }
     }
 }

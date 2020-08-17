@@ -1,6 +1,6 @@
 ﻿@page
-@using Microsoft.EntityFrameworkCore
 @model Taste.Pages.Admin.Category.UpsertModel
+
 
 <form method="post" asp-action="Upsert">
     <div class="container">
@@ -13,7 +13,7 @@
 
 
             <div class="col-12 px-3" style="border-bottom: 1px solid #325d88">
-                <h2 class="text-primary">Category</h2>
+                <h2 class="text-primary">@(Model.CategoryObj.Id!=0 ? "Update" : "Create")Category</h2>
 
             </div>
             <div class="col-8 pt-3">

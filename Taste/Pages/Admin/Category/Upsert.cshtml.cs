@@ -26,7 +26,7 @@ namespace Taste.Pages.Admin.Category
             CategoryObj = new Models.Category();
             if (id != null)
             {
-              
+
                 CategoryObj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
                 if (CategoryObj != null)
                 {
@@ -37,7 +37,7 @@ namespace Taste.Pages.Admin.Category
             return Page();
         }
 
-
+    
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
