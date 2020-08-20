@@ -12,32 +12,31 @@ namespace Taste.Pages.Admin.Category
     {
 
         private readonly IUnitOfWork _unitOfWork;
+
         public UpsertModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        //bind to post
-        [BindProperty]
-        public Models.Category CategoryObj { get; set; }
+        [BindProperty] public Models.Category CategoryObj { get; set; }
 
         public IActionResult OnGet(int? id)
         {
             CategoryObj = new Models.Category();
             if (id != null)
             {
-
                 CategoryObj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
-                if (CategoryObj != null)
+                if (CategoryObj == null)
                 {
                     return NotFound();
                 }
             }
 
             return Page();
+
         }
 
-    
+
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
@@ -53,8 +52,10 @@ namespace Taste.Pages.Admin.Category
             {
                 _unitOfWork.Category.Update(CategoryObj);
             }
+
             _unitOfWork.Save();
             return RedirectToPage("./Index");
         }
     }
+
 }

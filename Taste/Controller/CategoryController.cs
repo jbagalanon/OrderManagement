@@ -21,7 +21,6 @@ namespace Taste.Controller
 
 
         [HttpGet]
-
         public IActionResult Get()
         {
             return Json(new {data = _unitOfWork.Category.GetAll()});
