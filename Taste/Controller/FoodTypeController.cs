@@ -28,5 +28,26 @@ namespace Taste.Controller
             return Json(new {data = _unitOfWork.FoodType.GetAll()});
         }
 
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            var objFromDb = _unitOfWork.FoodType.GetFirstOrDefault(f => f.Id == id);
+
+            if (objFromDb == null)
+            {
+                return Json(new {success = false, message = "File Not Found"});
+
+            }
+            else
+            {
+                _unitOfWork.FoodType.Remove(objFromDb);
+                _unitOfWork.Save();
+                return Json(new {success=true, message ="File Deleted Successfully"});
+
+            }
+        }
+
+
     }
 }
