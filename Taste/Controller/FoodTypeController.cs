@@ -27,5 +27,6 @@ namespace Taste.Controller
 
             return Json(new {data = _unitOfWork.FoodType.GetAll()});
         }
+
     }
 }

@@ -1,40 +1,47 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Taste.DataAccess.Data.Repository.IRepository;
 
-namespace Taste.Pages.Admin.Category
+namespace Taste.Pages.Admin.FoodType
 {
     public class UpsertModel : PageModel
     {
 
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork  _unitOfWork;
 
         public UpsertModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        [BindProperty] 
-        public Models.Category CategoryObj { get; set; }
 
-        public IActionResult OnGet(int? id)
+        [BindProperty]
+        //get models 
+        public Models.FoodType FoodTypeObj { get; set; }
+
+        public IActionResult OnGet(int ? id)
         {
-            CategoryObj = new Models.Category();
+            //initialize obj
+            FoodTypeObj = new Models.FoodType();
+
+            //check obj validdation
             if (id != null)
             {
-                CategoryObj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
-                if (CategoryObj == null)
+                FoodTypeObj = _unitOfWork.FoodType.GetFirstOrDefault(f => f.Id == id);
+
+                if (FoodTypeObj == null)
                 {
                     return NotFound();
                 }
+                
             }
 
             return Page();
-
         }
 
         public IActionResult OnPost()
@@ -43,19 +50,22 @@ namespace Taste.Pages.Admin.Category
             {
                 return Page();
             }
-
-            if (CategoryObj.Id == 0)
+            
+            //if food object is equal to  0 add object
+            else if (FoodTypeObj.Id == 0)
             {
-                _unitOfWork.Category.Add(CategoryObj);
+                _unitOfWork.FoodType.Add(FoodTypeObj);
             }
             else
             {
-                _unitOfWork.Category.Update(CategoryObj);
+               _unitOfWork.FoodType.update(FoodTypeObj); 
             }
-
             _unitOfWork.Save();
             return RedirectToPage("./Index");
-        }
-    }
 
+        }
+
+
+
+    }
 }
