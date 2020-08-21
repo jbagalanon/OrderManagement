@@ -14,7 +14,7 @@ namespace Taste.DataAccess
         {
             
         }
-
+        public DbSet<MenuItem>MenuItem { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<FoodType> FoodType { get; set; }
     }
