@@ -29,8 +29,8 @@ namespace Taste.Controller
         }
 
 
-        [HttpDelete]
-        public IActionResult Delete(int id)
+        [HttpDelete ("{id}")]
+        public IActionResult Delete(int  id)
         {
             var objFromDb = _unitOfWork.FoodType.GetFirstOrDefault(f => f.Id == id);
 

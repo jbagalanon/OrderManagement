@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "/api/foodtype",
+            "url": "/api/foodType",
             "type": "GET",
             "datatype": "json"
         },
@@ -21,7 +21,7 @@ function loadList() {
                                 <a href="/Admin/foodtype/upsert?id=${data}" class="btn btn-success text-white" style="cussor:pointer; width:100px;">
                                     <i class="far fa-edit"></i> Edit
                                 </a>
-                                <a class="btn btn-danger text-white" style="cursor:pointer; width:100px;" onclick=Delete('/api/foodtype/'+${data})>
+                                <a class="btn btn-danger text-white" style="cursor:pointer; width:100px;" onclick=Delete('/api/foodType/'+${data})>
                                     <i class="far fa-trash-alt"></i> Delete
                                 </a>
                     </div>`;
