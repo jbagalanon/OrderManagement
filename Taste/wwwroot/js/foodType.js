@@ -18,7 +18,7 @@ function loadList() {
                 "data": "id",
                 "render": function (data) {
                     return ` <div class="text-center">
-                                <a href="/Admin/foodtype/upsert?id=${data}" class="btn btn-success text-white" style="cussor:pointer; width:100px;">
+                                <a href="/Admin/foodType/upsert?id=${data}" class="btn btn-success text-white" style="cursor:pointer; width:100px;">
                                     <i class="far fa-edit"></i> Edit
                                 </a>
                                 <a class="btn btn-danger text-white" style="cursor:pointer; width:100px;" onclick=Delete('/api/foodType/'+${data})>

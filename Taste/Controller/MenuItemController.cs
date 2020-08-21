@@ -40,7 +40,7 @@ namespace Taste.Controller
         }
 
 
-        [HttpDelete("{id")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             try
