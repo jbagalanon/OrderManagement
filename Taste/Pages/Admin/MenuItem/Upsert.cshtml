@@ -3,7 +3,7 @@
 
 @*this is mvvm type of implementation 1 pk and 2 fk*@
 
-<form method="post" asp-action="Upsert">
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <div class="container">
         <div class="row px-2 mx-2 backgroundWhite border">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -66,7 +66,7 @@
                         @*This area is for dropdown menu of category - through selectlistitem *@
                         @Html.DropDownListFor(m => m.MenuItemObj.MenuItem.CategoryId,
                             Model.MenuItemObj.CategoryList, "-Please select a Category-",
-                            new { @class = "form-control" });
+                            new { @class = "form-control" })
                         <span class="text-danger" asp-validation-for="MenuItemObj.MenuItem.CategoryId"></span>
 
                     </div>
@@ -80,7 +80,7 @@
                         @*This area is for dropdown menu of foodtype - through selectlistitem *@
                         @Html.DropDownListFor(m => m.MenuItemObj.MenuItem.FoodTypeId,
                             Model.MenuItemObj.FoodTypeList, "-Please select a Food Type-",
-                            new { @class = "form-control" });
+                            new { @class = "form-control" }) 
                         <span class="text-danger" asp-validation-for="MenuItemObj.MenuItem.FoodTypeId"></span>
 
                     </div>
@@ -113,13 +113,34 @@
                         <a asp-page="./Index" class="btn btn-success form-control">
                             Back to list
                         </a>
-
-
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </form>
 
+@*this is for addons
+    *@
+
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal("Error", "Please Select an image", "error")
+                return false;
+            }
+            return true;
+        };
+    </script>
+
+
+
+}

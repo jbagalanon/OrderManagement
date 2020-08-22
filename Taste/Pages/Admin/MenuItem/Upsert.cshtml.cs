@@ -79,7 +79,7 @@ namespace Taste.Pages.Admin.MenuItem
                 //change userimage filename to string
                 string fileName = Guid.NewGuid().ToString();
                 //find upload path which is located form images subdir to menuitems
-                var uploads = Path.Combine(webRootPath, @"image\menuItems");
+                var uploads = Path.Combine(webRootPath, @"images\menuItems");
 
                 //once the upload is finish the ext must combine
                 var extension = Path.GetExtension(files[0].FileName);
@@ -91,7 +91,7 @@ namespace Taste.Pages.Admin.MenuItem
                  files[0].CopyTo(fileStream);   
                 }
 
-                MenuItemObj.MenuItem.Image = @"\image\menuItems" + fileName + extension;
+                MenuItemObj.MenuItem.Image = @"\images\menuItems" + fileName + extension;
                 
                 _unitOfWork.MenuItem.Add(MenuItemObj.MenuItem);
             }
@@ -108,7 +108,7 @@ namespace Taste.Pages.Admin.MenuItem
                     //change userimage filename to string
                     string fileName = Guid.NewGuid().ToString();
                     //find upload path which is located form images subdir to menuitems
-                    var uploads = Path.Combine(webRootPath, @"image\menuItems");
+                    var uploads = Path.Combine(webRootPath, @"images\menuItems");
 
                     //once the upload is finish the ext must combine
                     var extension = Path.GetExtension(files[0].FileName);
@@ -128,7 +128,7 @@ namespace Taste.Pages.Admin.MenuItem
                         files[0].CopyTo(fileStream);
                     }
 
-                    MenuItemObj.MenuItem.Image = @"\image\menuItems" + fileName + extension;
+                    MenuItemObj.MenuItem.Image = @"\images\menuItems" + fileName + extension;
 
                     _unitOfWork.MenuItem.Remove(MenuItemObj.MenuItem);
                 }
