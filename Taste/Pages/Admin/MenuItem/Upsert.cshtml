@@ -80,13 +80,22 @@
                         @*This area is for dropdown menu of foodtype - through selectlistitem *@
                         @Html.DropDownListFor(m => m.MenuItemObj.MenuItem.FoodTypeId,
                             Model.MenuItemObj.FoodTypeList, "-Please select a Food Type-",
-                            new { @class = "form-control" }) 
+                            new { @class = "form-control" })
                         <span class="text-danger" asp-validation-for="MenuItemObj.MenuItem.FoodTypeId"></span>
 
                     </div>
                 </div>
 
             </div>
+
+            @if (Model.MenuItemObj.MenuItem != null)
+            {
+        <div class="col-4 p-4">
+            <img src="@Model.MenuItemObj.MenuItem.Image" width="100%" style="border-radius: 5px; border:1px solid #bbb9b9">
+        </div>
+            }
+
+
         </div>
         <div class="form-group row">
 
