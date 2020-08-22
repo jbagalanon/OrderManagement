@@ -42,7 +42,11 @@ namespace Taste.Pages.Admin.MenuItem
             MenuItemObj = new MenuItemVM
             {
                 CategoryList = _unitOfWork.Category.GetCategoryListForDropdown(),
-                FoodTypeList = _unitOfWork.FoodType.GetFoodTypeListForDropdown()
+                FoodTypeList = _unitOfWork.FoodType.GetFoodTypeListForDropdown(),
+                
+                //then initialized the main menu item
+
+                MenuItem = new Models.MenuItem()
             };
 
             //check if it is empty and initialize menu item
