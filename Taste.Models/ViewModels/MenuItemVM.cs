@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Taste.Models.ViewModels
 {
-    class MenuItemVM
+    public class MenuItemVM
     {
 
         //MenuItem is is the main or primary while cat and food is fk
