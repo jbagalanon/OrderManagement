@@ -33,7 +33,10 @@ function loadList() {
         "language": {
             "emptyTable": "no data found."
         },
-        "width": "100%"
+        "width": "100%",
+        //this is for ordering desc or asc
+        "order":[[2,"asc"]]
+
     });
 }
 
