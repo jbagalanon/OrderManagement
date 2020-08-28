@@ -26,7 +26,7 @@ namespace Taste.DataAccess.Data.Repository
             menuItemFromDb.Name = menuItem.Name;
             menuItemFromDb.Description = menuItem.Description;
             menuItemFromDb.CategoryId = menuItem.CategoryId;
-           menuItemFromDb.FoodTypeId = menuItem.FoodTypeId;
+            menuItemFromDb.FoodTypeId = menuItem.FoodTypeId;
            menuItemFromDb.Price = menuItem.Price;
 
             //update only if image is uploaded
