@@ -8,9 +8,64 @@
 
 @*This is the new design of register form*@
 
+<form method="post" autocomplete="off" asp-route-returnUrl="@Model.ReturnUrl">
+    <div class="py-4 my-4">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="row form-group">
+            <div class="col-8 offset-2">
+                <div class="card">
+                    <div class="card-body px-lg-5 pt-4">
+                        <h3 class="col-12 text-success text-center py-4">
+                            <strong>Sign Up</strong>
+                        </h3>
+                        <hr>
+                        <div class="form-row py-2">
+                            <div class="col">
+                                <div>
+                                    <input type="text" asp-for="Input.FirstName" placeholder="First Name" class="form-control">
+                                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div>
+                                    <input type="text" asp-for="Input.LastName" placeholder="First Name" class="form-control">
+                                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <input type="email" asp-for="Input.Email" placeholder="Email" class="form-control">
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="py-2">
+                            <input type="text" asp-for="Input.PhoneNumber"  placeholder="Phone Number" class="form-control">
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="py-2">
+                            <input type="password" asp-for="Input.Password" autocomplete="off" placeholder="Password" class="form-control">
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="py-2">
+                            <input type="password" asp-for="Input.ConfirmPassword" autocomplete="off" placeholder="Confirm Password" class="form-control">
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
 
 
-<div class="row">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+@*<div class="row">
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
@@ -64,7 +119,7 @@
             }
         </section>
     </div>
-</div>
+</div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
