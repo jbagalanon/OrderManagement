@@ -13,7 +13,7 @@ namespace Taste.Models
     {
 
         [Display(Name="Full Name")]
-        public string Firstname { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
 
         [NotMapped]
@@ -21,7 +21,7 @@ namespace Taste.Models
         {
             get
             {
-                return Firstname + " " + LastName;
+                return FirstName + " " + LastName;
             }
         }
     }
