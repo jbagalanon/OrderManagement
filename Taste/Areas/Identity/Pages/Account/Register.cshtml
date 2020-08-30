@@ -1,11 +1,6 @@
 ﻿@page
+@using Taste.Utility
 @model RegisterModel
-@{
-    ViewData["Title"] = "Register";
-}
-
-<h1>@ViewData["Title"]</h1>
-
 @*This is the new design of register form*@
 
 <form method="post" autocomplete="off" asp-route-returnUrl="@Model.ReturnUrl">
@@ -40,19 +35,32 @@
                         </div>
 
                         <div class="py-2">
-                            <input type="text" asp-for="Input.PhoneNumber"  placeholder="Phone Number" class="form-control">
+                            <input type="text" asp-for="Input.PhoneNumber" placeholder="Phone Number" class="form-control">
                             <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                         </div>
-                        
+
                         <div class="py-2">
                             <input type="password" asp-for="Input.Password" autocomplete="off" placeholder="Password" class="form-control">
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
-                        
+
                         <div class="py-2">
                             <input type="password" asp-for="Input.ConfirmPassword" autocomplete="off" placeholder="Confirm Password" class="form-control">
                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         </div>
+                        <div class="py-2">
+                            <input type="radio" name="rdUserRole" value="@SD.KitchenRole" /> @SD.KitchenRole
+                            <input type="radio" name="rdUserRole" value="@SD.CustomerRole" /> @SD.CustomerRole
+                            <input type="radio" name="rdUserRole" value="@SD.FrontDeskRole" /> @SD.FrontDeskRole
+                            <input type="radio" name="rdUserRole" value="@SD.ManagerRole" /> @SD.ManagerRole
+                        </div>
+                        <div class="py-2">
+                            <button type="submit" class="btn btn-success form-control">Register</button>
+                        </div>
+                        <hr>
+                        <p>
+                            By clicking <em>Register</em> you agree to our <a href="" target="_blank"> terms and conditions  </a>
+                        </p>
 
 
                     </div>
@@ -63,31 +71,16 @@
 </form>
 
 
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
 
 
-@*<div class="row">
+<div class="row">
     <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
+
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
@@ -119,7 +112,7 @@
             }
         </section>
     </div>
-</div>*@
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
