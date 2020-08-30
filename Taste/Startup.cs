@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Taste.DataAccess;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Taste.DataAccess.Data.Repository.IRepository;
 using Taste.DataAccess.Data.Repository;
+using Taste.Utility;
 
 namespace Taste
 {
@@ -34,8 +36,9 @@ namespace Taste
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders()
-
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             //add mvc
