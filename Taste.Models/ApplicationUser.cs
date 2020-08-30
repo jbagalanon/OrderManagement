@@ -17,7 +17,7 @@ namespace Taste.Models
         public string LastName { get; set; }
 
         [NotMapped]
-        public string Fullname
+        public string FullName
         {
             get
             {
