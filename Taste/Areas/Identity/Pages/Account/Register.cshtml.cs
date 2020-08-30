@@ -23,6 +23,7 @@ namespace Taste.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        pri
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
