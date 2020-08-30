@@ -35,14 +35,23 @@ namespace Taste.Controller
 
             if (objFromDb == null)
             {
-                return Json(new {success = false, message = "Error While Deleting"});
+                return Json(new {success = false, message = "Error While Lock/unlocking"});
             }
+
+            if (objFromDb.LockoutEnd != null && objFromDb.LockoutEnd > DateTime.Now)
+            {
+                objFromDb.LockoutEnd = DateTime.Now;
+            }
+
             else
             {
-                _unitOfWork.ApplicationUser.Remove(objFromDb);
-                _unitOfWork.Save();
-                return Json(new {success = true, message = "Files Deleted Successfully"});
+                objFromDb.LockoutEnd = DateTime.Now.AddMinutes(3);
             }
+
+            _unitOfWork.Save();
+
+            return Json(new {success = true, message = "successfully"});
+
 
         }
     }
