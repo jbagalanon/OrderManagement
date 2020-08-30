@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Taste.Models;
+using Taste.Utility;
 
 namespace Taste.Areas.Identity.Pages.Account
 {
@@ -100,8 +101,48 @@ namespace Taste.Areas.Identity.Pages.Account
 
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                //create a role
+                if (!await _roleManager.RoleExistsAsync(SD.ManagerRole))
+                {
+                    _roleManager.CreateAsync(new IdentityRole(SD.ManagerRole)).GetAwaiter().GetResult();
+                    _roleManager.CreateAsync(new IdentityRole(SD.FrontDeskRole)).GetAwaiter().GetResult();
+                    _roleManager.CreateAsync(new IdentityRole(SD.KitchenRole)).GetAwaiter().GetResult();
+                    _roleManager.CreateAsync(new IdentityRole(SD.CustomerRole)).GetAwaiter().GetResult();
+                }
+
+                
                 if (result.Succeeded)
                 {
+                    //if role succedded what to do?
+                    if (role == SD.KitchenRole)
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.KitchenRole);
+                    }
+
+                    else
+                    {
+                        if (role == SD.ManagerRole)
+                        {
+                            await _userManager.AddToRoleAsync(user, SD.ManagerRole);
+                        }
+                     
+
+                        else
+                        {
+                            if (role==SD.KitchenRole)
+                            {
+                                await _userManager.AddToRoleAsync(user, SD.KitchenRole);
+                            }
+
+                            else
+                            {
+                                {
+                                    await _userManager.AddToRoleAsync(user, SD.CustomerRole);
+                                }
+                            }
+                        }
+
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
