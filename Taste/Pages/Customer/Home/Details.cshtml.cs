@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,18 @@ namespace Taste.Pages.Customer.Home
                 MenuItemId = id
 
             };
+        }
+
+        public IActionResult OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                var claimsIdentity = (ClaimsIdentity) this.User.Identity;
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+                ShoppingCartObj.ApplicationUserId = claim.Value;
+
+            }
         }
     }
 }
