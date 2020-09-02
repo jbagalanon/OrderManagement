@@ -13,6 +13,7 @@ using Taste.DataAccess;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stripe;
 using Taste.DataAccess.Data.Repository.IRepository;
 using Taste.DataAccess.Data.Repository;
 using Taste.Utility;
@@ -45,6 +46,7 @@ namespace Taste
                 options.Cookie.IsEssential = true;
             });
 
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -84,6 +86,7 @@ namespace Taste
 
             //delete endpoint routing considering mvc have both razor and mvc embedded 
             app.UseMvc();
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
         }
     }
 }
