@@ -18,6 +18,13 @@ namespace Taste.DataAccess.Data.Repository.IRepository
 
         IShoppingCartRepository ShoppingCart { get; }
 
+        //nakalimutan pa
+        IOrderHeaderRepository OrderHeader { get; }
+        
+        //nakalimutan pa
+        IOrderDetailsRepository OrderDetails { get; }
+
+
         void Save();
 
     }
