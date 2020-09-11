@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Stripe;
 using Taste.DataAccess.Data.Repository.IRepository;
 using Taste.Models;
 using Taste.Models.ViewModels;
@@ -23,6 +24,7 @@ namespace Taste.Pages.Customer.Cart
         }
 
         public OrderDetailsCart detailCart { get; set; }
+
         public IActionResult OnGet()
         {
             detailCart = new OrderDetailsCart()
@@ -35,7 +37,7 @@ namespace Taste.Pages.Customer.Cart
             detailCart.OrderHeader.OrderTotal = 0;
 
             //retrieving shopping card in database
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claimsIdentity = (ClaimsIdentity) User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
 
@@ -61,7 +63,7 @@ namespace Taste.Pages.Customer.Cart
             detailCart.OrderHeader.PickupName = applicationUser.FullName;
             detailCart.OrderHeader.PickUpTime = DateTime.Now;
             detailCart.OrderHeader.PhoneNumber = applicationUser.PhoneNumber;
-            return Page(); 
+            return Page();
         }
 
 
@@ -91,7 +93,7 @@ namespace Taste.Pages.Customer.Cart
                 item.MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == item.MenuItemId);
 
                 OrderDetails orderDetails = new OrderDetails
-                 {
+                {
                     MenuItemId = item.MenuItemId,
                     OrderId = detailCart.OrderHeader.Id,
                     Description = item.MenuItem.Description,
@@ -108,7 +110,44 @@ namespace Taste.Pages.Customer.Cart
 
             _unitOfWork.Save();
 
+            if (stripeToken != null)
+            {
 
+
+                // `source` is obtained with Stripe.js; 
+                //see https://stripe.com/docs/payments/accept-a-payment-charges#web-create-token
+                var options = new ChargeCreateOptions
+                {
+                    Amount = Convert.ToInt32(detailCart.OrderHeader.OrderTotal * 100),
+                    Currency = "php",
+                    Source = "Order ID : " + detailCart.OrderHeader.Id,
+                    Description = stripeToken
+                };
+                var service = new ChargeService();
+                Charge charge = service.Create(options);
+
+                //check if charge is succesful or not
+                if (charge.Status.ToLower() == "succeeded")
+                {
+                    //email
+                    detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
+                    detailCart.OrderHeader.Status = SD.StatusSubmitted;
+                }
+                else
+                {
+                    detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusRejected;
+
+                }
+            }
+            else
+            {
+                detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusRejected;
+            }
+
+            _unitOfWork.Save();
+
+            return RedirectToPage("/Customer/Cart/OrderConfirmation", new {id = detailCart.OrderHeader.Id});
         }
+        
     }
 }
