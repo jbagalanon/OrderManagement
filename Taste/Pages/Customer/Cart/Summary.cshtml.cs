@@ -23,6 +23,8 @@ namespace Taste.Pages.Customer.Cart
             _unitOfWork = unitOfWork;
         }
 
+        //this is used for stripe payment
+        [BindProperty]
         public OrderDetailsCart detailCart { get; set; }
 
         public IActionResult OnGet()
@@ -33,7 +35,7 @@ namespace Taste.Pages.Customer.Cart
             };
 
             //initialialized order details
-
+            
             detailCart.OrderHeader.OrderTotal = 0;
 
             //retrieving shopping card in database
@@ -55,7 +57,7 @@ namespace Taste.Pages.Customer.Cart
                 cartList.MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == cartList.MenuItemId);
                 //get total multiply to item price to item count
 
-                detailCart.OrderHeader.OrderTotal += cartList.MenuItem.Price;
+                detailCart.OrderHeader.OrderTotal += (cartList.MenuItem.Price * cartList.Count);
             }
 
             //retrieve info by userid
@@ -101,8 +103,10 @@ namespace Taste.Pages.Customer.Cart
                     Price = item.MenuItem.Price,
                     Count = item.Count
                 };
+                detailCart.OrderHeader.OrderTotal += (orderDetails.Count * orderDetails.Price);
+                _unitOfWork.OrderDetails.Add(orderDetails);
             }
-
+            
             _unitOfWork.ShoppingCart.RemoveRange(detailCart.listCart);
 
             //get session
@@ -119,14 +123,14 @@ namespace Taste.Pages.Customer.Cart
                 var options = new ChargeCreateOptions
                 {
                     Amount = Convert.ToInt32(detailCart.OrderHeader.OrderTotal * 100),
-                    Currency = "php",
-                    Source = "Order ID : " + detailCart.OrderHeader.Id,
-                    Description = stripeToken
+                    Currency = "Php",
+                    Description = "Order ID : " + detailCart.OrderHeader.Id,
+                    Source = stripeToken
                 };
                 var service = new ChargeService();
                 Charge charge = service.Create(options);
 
-                //check if charge is succesful or not
+                //check if charge is successful or not
                 if (charge.Status.ToLower() == "succeeded")
                 {
                     //email
@@ -151,3 +155,4 @@ namespace Taste.Pages.Customer.Cart
         
     }
 }
+ 

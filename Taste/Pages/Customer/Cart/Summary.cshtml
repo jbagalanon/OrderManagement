@@ -114,16 +114,17 @@
                                 }
                                 <script src="https://checkout.stripe.com/checkout.js"
                                         class="stripe-button"
-                                        data-keyboard="@Stripe.Value.PublishableKey"
+                                        data-key="@Stripe.Value.PublishableKey"
                                         data-amount="@OrderTotalForStrip"
-                                        data-name="Taste Restaurant"
-                                        data-label =" Place Order"
+                                        data-name="Bugz MarketPlace"
+                                        data-label ="Place Order"
                                         data-description ="Defend Your Nation! Buy now pay later"
                                         data-locale="auto"
                                         data-allow-remeber-me="false"
-                                        data-image="#"
+                                        data-image="https://pbs.twimg.com/profile_images/1280236709825835008/HmeYTwai_400x400.png"
                                        
                                 ></script>
+
                               <script>document.getElementsByClassName("stripe-button-el")[0].style.display='none'</script>
                             <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-success form-control">Place Order</button>
                         </div>

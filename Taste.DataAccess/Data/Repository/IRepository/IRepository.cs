@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Taste.DataAccess.Data.Repository.IRepository
 {
-    public interface IRepository<T> where T:class
+    public interface  IRepository<T> where T:class
     {
         T Get(int id);
 

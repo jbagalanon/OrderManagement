@@ -22,7 +22,7 @@ namespace Taste.Models
         [Required]
         [DisplayFormat(DataFormatString="{0:C}")]
         [Display(Name="Order Total")]
-        public Double OrderTotal  { get; set; }
+        public double OrderTotal  { get; set; }
 
         [Required]
         [Display(Name = "Pick Up Time")]
