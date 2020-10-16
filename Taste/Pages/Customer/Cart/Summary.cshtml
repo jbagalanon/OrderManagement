@@ -110,12 +110,12 @@
                             <div class="col-12 col-md-4 offset-md-8">
                                 @{
                                     //convert amount to cents
-                                    var OrderTotalForStrip = Model.detailCart.OrderHeader.OrderTotal * 100;
+                                    var OrderTotalForStripe = Model.detailCart.OrderHeader.OrderTotal * 100;
                                 }
                                 <script src="https://checkout.stripe.com/checkout.js"
                                         class="stripe-button"
                                         data-key="@Stripe.Value.PublishableKey"
-                                        data-amount="@OrderTotalForStrip"
+                                        data-amount="@OrderTotalForStripe"
                                         data-name="Bugz MarketPlace"
                                         data-label ="Place Order"
                                         data-description ="Defend Your Nation! Buy now pay later"

@@ -40,7 +40,8 @@ namespace Taste.Pages.Customer.Cart
             
 
             //retrieve data from database
-            IEnumerable<ShoppingCart> cart = _unitOfWork.ShoppingCart.GetAll(s => s.ApplicationUserId == claim.Value);
+            IEnumerable<ShoppingCart> cart = _unitOfWork.ShoppingCart.GetAll
+                (s => s.ApplicationUserId == claim.Value);
 
             //cart database condition retrieval
             if (cart != null)

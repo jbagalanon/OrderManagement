@@ -25,7 +25,7 @@ namespace Taste.DataAccess.Data.Repository
         }
 
         public T Get(int id)
-        {
+        { 
             return dbSet.Find(id);
         }
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
@@ -54,7 +54,7 @@ namespace Taste.DataAccess.Data.Repository
 
             return query.ToList();
 
-
+             
         }
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
@@ -85,7 +85,7 @@ namespace Taste.DataAccess.Data.Repository
         }
 
 
-        public void Remove(T entity)
+        public void Remove(T entity) 
         {
             dbSet.Remove(entity);
         }

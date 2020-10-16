@@ -85,7 +85,7 @@ namespace Taste.Pages.Customer.Cart
                 detailCart.OrderHeader.PickUpDate.ToShortDateString() + " " +
                 detailCart.OrderHeader.PickUpTime.ToShortTimeString());
 
-            List<OrderDetails> orderDetailsList = new List<OrderDetails>();
+            List <OrderDetails> orderDetailsList = new List<OrderDetails>();
             _unitOfWork.OrderHeader.Add(detailCart.OrderHeader);
             _unitOfWork.Save();
 
