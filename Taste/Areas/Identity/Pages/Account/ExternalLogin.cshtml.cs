@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Taste.Models;
+using Taste.Utility;
 
 namespace Taste.Areas.Identity.Pages.Account
 {
@@ -164,6 +165,10 @@ namespace Taste.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    //before logging in give a user role, by default custoner role
+
+                    await _userManager.AddToRoleAsync(user, SD.CustomerRole);
+                    
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
