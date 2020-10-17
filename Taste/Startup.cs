@@ -57,11 +57,20 @@ namespace Taste
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+            
+            
             //facebook api -  need nuget package facebook authentication 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = "1219845055067480";
                 facebookOptions.AppSecret = "03ba52ac8daa2ec2883dc4fb843ceb06";
+            });
+
+
+            services.AddAuthentication().AddMicrosoftAccount(options =>
+            {
+                options.ClientId = "018235df-b0c2-43d1-9863-8b9bd760aa17";
+                options.ClientSecret = "Bbni.d-o4maCd_1_sBJ95~_Y.Ks5-yfOj8";
             });
 
 
