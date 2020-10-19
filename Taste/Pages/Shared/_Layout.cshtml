@@ -41,16 +41,30 @@
 
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item " asp-area="" asp-page="/Admin/Category/Index">Category</a>
-
                                     <a class="dropdown-item" asp-area="" asp-page="/Admin/FoodType/Index">Food Type</a>
-
                                     <a class="dropdown-item" asp-area="" asp-page="/Admin/MenuItem/Index">Menu Item</a>
-
                                     <a class="dropdown-item" asp-area="" asp-page="/Admin/User/Index">Users</a>
                                 </div>
 
                             </li>
                         }
+                        
+                        @*Adding menu*@
+
+                        @if (User.IsInRole(SD.ManagerRole) || User.IsInRole(SD.KitchenRole))
+                        {
+                            <li class="nav-item text-white" asp-page="/Admin/Order/ManageOrder">
+                                Manager Order
+                            </li>
+                        }
+                        
+                        @if (User.IsInRole(SD.ManagerRole) || User.IsInRole(SD.FrontDeskRole))
+                        {
+                            <li class="nav-item text-white" asp-page="/Admin/Order/OrderList">
+                                Order Pickup
+                            </li>
+                        }
+
                         @if ((HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart)!=null))
                         {
                             <li>
