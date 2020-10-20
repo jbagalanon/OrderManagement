@@ -27,7 +27,7 @@ namespace Taste.Controller
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string status= null)
         {
             List<OrderDetailsViewModel> orderListVM = new List<OrderDetailsViewModel>();
 
@@ -51,6 +51,26 @@ namespace Taste.Controller
             {
                 OrderHeaderList = _unitOfWork.OrderHeader.GetAll(null, null, "ApplicationUser");
             }
+
+            //get the status
+            if (status == "cancelled")
+            {
+                OrderHeaderList = OrderHeaderList.Where(o => o.Status == SD.StatusCancelled || o.Status == SD.StatusRefunded || o.Status ==SD.PaymentStatusRejected);
+            }
+            else
+            {
+                if (status == "completed")
+                {
+                    OrderHeaderList = OrderHeaderList.Where(o => o.Status == SD.StatusCompleted);
+                }
+                else
+                {
+                    OrderHeaderList =
+                        OrderHeaderList.Where(o => o.Status == SD.StatusReady || o.Status == SD.StatusInProcess ||o.Status ==SD.StatusSubmitted || o.Status ==SD.PaymentStatusPending);
+                }
+            }
+
+
             //then populate orders
             foreach (OrderHeader item in OrderHeaderList)
             {
@@ -70,4 +90,4 @@ namespace Taste.Controller
     }
 
 }
-}
+
