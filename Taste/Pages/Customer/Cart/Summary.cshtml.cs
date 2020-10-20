@@ -106,7 +106,9 @@ namespace Taste.Pages.Customer.Cart
                 detailCart.OrderHeader.OrderTotal += (orderDetails.Count * orderDetails.Price);
                 _unitOfWork.OrderDetails.Add(orderDetails);
             }
-            
+            //two decimal place in order total
+            detailCart.OrderHeader.OrderTotal = Convert.ToDouble (String.Format("{0:.##}", detailCart.OrderHeader.OrderTotal));
+
             _unitOfWork.ShoppingCart.RemoveRange(detailCart.listCart);
 
             //get session
