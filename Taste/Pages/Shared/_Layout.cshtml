@@ -48,24 +48,28 @@
 
                             </li>
                         }
-                        
+
                         @*Adding menu*@
 
                         @if (User.IsInRole(SD.ManagerRole) || User.IsInRole(SD.KitchenRole))
                         {
-                            <li class="nav-item text-white" asp-page="/Admin/Order/ManageOrder">
-                                Manager Order
-                            </li>
-                        }
-                        
-                        @if (User.IsInRole(SD.ManagerRole) || User.IsInRole(SD.FrontDeskRole))
-                        {
-                            <li class="nav-item text-white" asp-page="/Admin/Order/OrderList">
-                                Order Pickup
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-page="/Admin/Order/ManageOrder">
+                                    Manage Order
+                                </a>
                             </li>
                         }
 
-                        @if ((HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart)!=null))
+                        @if (User.IsInRole(SD.ManagerRole) || User.IsInRole(SD.FrontDeskRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-page="/Admin/Order/OrderList">
+                                    Order Pickup
+                                </a>
+                            </li>
+                        }
+
+                        @if ((HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart) != null))
                         {
                             <li>
                                 <a asp-page="/Customer/Cart/Index" class="nav-link text-white-50">
