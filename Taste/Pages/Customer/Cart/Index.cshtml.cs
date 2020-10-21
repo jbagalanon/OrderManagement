@@ -53,11 +53,13 @@ namespace Taste.Pages.Customer.Cart
             {
                 cartList.MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == cartList.MenuItemId);
                 //get total multiply to item price to item count
-
+                //?     OrderDetailsCartVM.OrderHeader.OrderTotal += cartList.MenuItem.Price * cartList.Count;
                 OrderDetailsCartVM.OrderHeader.OrderTotal += cartList.MenuItem.Price;
             }
         }
 
+
+        //this is for post handler plus minus and delete
         public IActionResult OnPostPlus(int cartId)
         {
             var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(c => c.Id == cartId);
@@ -67,6 +69,8 @@ namespace Taste.Pages.Customer.Cart
             _unitOfWork.Save();
             return RedirectToPage("/Customer/Cart/Index");
         }
+
+        //post handler for minus
 
         public IActionResult OnPostMinus(int cartId)
         {

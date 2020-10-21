@@ -35,11 +35,11 @@ namespace Taste.Pages.Customer.Cart
             };
 
             //initialialized order details
-            
+
             detailCart.OrderHeader.OrderTotal = 0;
 
             //retrieving shopping card in database
-            var claimsIdentity = (ClaimsIdentity) User.Identity;
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
 
@@ -72,10 +72,12 @@ namespace Taste.Pages.Customer.Cart
         //126 -127 razor
         public IActionResult OnPost(string stripeToken)
         {
-            var claimsIdentity = (ClaimsIdentity) User.Identity;
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            detailCart.listCart = _unitOfWork.ShoppingCart.GetAll(c => c.ApplicationUserId == claim.Value).ToList();
+            detailCart.listCart = _unitOfWork.ShoppingCart.GetAll
+                (c => c.ApplicationUserId == claim.Value)
+                .ToList();
 
             detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
             detailCart.OrderHeader.OrderDate = DateTime.Now;
@@ -85,7 +87,7 @@ namespace Taste.Pages.Customer.Cart
                 detailCart.OrderHeader.PickUpDate.ToShortDateString() + " " +
                 detailCart.OrderHeader.PickUpTime.ToShortTimeString());
 
-            List <OrderDetails> orderDetailsList = new List<OrderDetails>();
+            List<OrderDetails> orderDetailsList = new List<OrderDetails>();
             _unitOfWork.OrderHeader.Add(detailCart.OrderHeader);
             _unitOfWork.Save();
 
@@ -107,7 +109,7 @@ namespace Taste.Pages.Customer.Cart
                 _unitOfWork.OrderDetails.Add(orderDetails);
             }
             //two decimal place in order total
-            detailCart.OrderHeader.OrderTotal = Convert.ToDouble (String.Format("{0:.##}", detailCart.OrderHeader.OrderTotal));
+            detailCart.OrderHeader.OrderTotal = Convert.ToDouble(String.Format("{0.##}", detailCart.OrderHeader.OrderTotal));
 
             _unitOfWork.ShoppingCart.RemoveRange(detailCart.listCart);
 
@@ -125,12 +127,15 @@ namespace Taste.Pages.Customer.Cart
                 var options = new ChargeCreateOptions
                 {
                     Amount = Convert.ToInt32(detailCart.OrderHeader.OrderTotal * 100),
-                    Currency = "Php",
+                    Currency = "usd",
                     Description = "Order ID : " + detailCart.OrderHeader.Id,
                     Source = stripeToken
                 };
                 var service = new ChargeService();
                 Charge charge = service.Create(options);
+
+                //if there are any charge we need to logge the transaction
+                detailCart.OrderHeader.TransactionId = charge.Id;
 
                 //check if charge is successful or not
                 if (charge.Status.ToLower() == "succeeded")
@@ -152,9 +157,8 @@ namespace Taste.Pages.Customer.Cart
 
             _unitOfWork.Save();
 
-            return RedirectToPage("/Customer/Cart/OrderConfirmation", new {id = detailCart.OrderHeader.Id});
+            return RedirectToPage("/Customer/Cart/OrderConfirmation", new { id = detailCart.OrderHeader.Id });
         }
-        
+
     }
 }
- 
