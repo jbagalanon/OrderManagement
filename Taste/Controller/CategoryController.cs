@@ -11,7 +11,7 @@ namespace Taste.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-  
+ 
     public class CategoryController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly IUnitOfWork _unitOfWork;
