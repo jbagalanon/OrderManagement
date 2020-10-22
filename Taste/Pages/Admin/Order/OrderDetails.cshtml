@@ -79,56 +79,59 @@
 
             @*this is the amount section*@
 
-            <div class="col-lg-4 col-12">
-                <h4 class="d-flex justify-content-between align-content-center mb-3">
-                    <span class="text-muted">Order ID: </span>
-                    <span class="badge badge-secondary badge-pill">@Model.OrderDetailsVM.OrderHeader.Id</span>
-                </h4>
-                <ul class="list-group mb-3">
-                    @foreach (var details in Model.OrderDetailsVM.OrderDetails)
-                    {
-
-                        <li class="list-group-item d-flex justify-content-between">
-                            <div>
-                                <h6 class="my-0">@details.Name</h6>
-                                <small class="text-muted">Quantity : @details.Count</small>
-                            </div>
-                            <span class="text-muted">$@(details.Price * details.Count)</span>
-                        </li>
-
-
-                        <li class="list-group-item d-flex justify-content-between bg-light">
-                            <span class="text-info"> Total (USD)</span>
-                            <strong class="text-info">$@Model.OrderDetailsVM.OrderHeader.OrderTotal</strong>
-                        </li>
-                    }
-                </ul>
-                @if (Model.OrderDetailsVM.OrderHeader.Status.Equals(SD.StatusReady) && (User.IsInRole(SD.ManagerRole)) || User.IsInRole(SD.FrontDeskRole))
-                {
-                    <button type="submit" class="btn btn-success form-control" asp-page-handler="OrderConfirm" asp-route-orderId="@Model.OrderDetailsVM.OrderHeader.Id"><i class="far fa-thumbs-up"></i> Confirm Pickup</button>
-
-                }
-                else
+        <div class="col-lg-4 col-12">
+            <h4 class="d-flex justify-content-between align-content-center mb-3">
+                <span class="text-muted">Order ID: </span>
+                <span class="badge badge-secondary badge-pill">@Model.OrderDetailsVM.OrderHeader.Id</span>
+            </h4>
+            <ul class="list-group mb-3">
+                @foreach (var details in Model.OrderDetailsVM.OrderDetails)
                 {
 
-                }
-                <button type="submit" disabled class="btn btn-info form-control">@Model.OrderDetailsVM.OrderHeader.Status  </button>
-
-                @if (User.IsInRole(SD.ManagerRole) || User.IsInRole(SD.FrontDeskRole))
-                {
-                    <div class="row p-1">
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-warning form-control" asp-page-handler="OrderCancel" asp-route-orderId="@Model.OrderDetailsVM.OrderHeader.Id"><i class="fas fa-times"></i> Cancel Order</button>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <h6 class="my-0">@details.Name</h6>
+                            <small class="text-muted">Quantity : @details.Count</small>
                         </div>
+                        <span class="text-muted">$@(details.Price * details.Count)</span>
+                    </li>
 
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-danger form-control" asp-page-handler="OrderRefunded" asp-route-orderId="@Model.OrderDetailsVM.OrderHeader.Id"><i class="fas fa-times"></i> Refund Order</button>
-                        </div> 
-                    </div>
 
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <span class="text-info"> Total (USD)</span>
+                        <strong class="text-info">$@Model.OrderDetailsVM.OrderHeader.OrderTotal</strong>
+                    </li>
                 }
+            </ul>
+            @if (Model.OrderDetailsVM.OrderHeader.Status.Equals(SD.StatusReady) && (User.IsInRole(SD.ManagerRole)) || User.IsInRole(SD.FrontDeskRole))
+            {
+                <button type="submit" class="btn btn-success form-control" asp-page-handler="OrderConfirm" asp-route-orderId="@Model.OrderDetailsVM.OrderHeader.Id"><i class="far fa-thumbs-up"></i> Confirm Pickup</button>
 
+            }
+            else
+            {
+
+            }
+            <button type="submit" disabled class="btn btn-info form-control">@Model.OrderDetailsVM.OrderHeader.Status  </button>
+
+            @if (User.IsInRole(SD.ManagerRole) || User.IsInRole(SD.FrontDeskRole)
+            && (Model.OrderDetailsVM.OrderHeader.Status.Equals(SD.StatusSubmitted)
+            || Model.OrderDetailsVM.OrderHeader.Status.Equals(SD.StatusReady)
+            || Model.OrderDetailsVM.OrderHeader.Status.Equals(SD.StatusInProcess)))
+            {
+            <div class="row p-1">
+                <div class="col-6">
+                    <button type="submit" class="btn btn-warning form-control" asp-page-handler="OrderCancel" asp-route-orderId="@Model.OrderDetailsVM.OrderHeader.Id"><i class="fas fa-times"></i> Cancel Order</button>
+                </div>
+
+                <div class="col-6">
+                    <button type="submit" class="btn btn-danger form-control" asp-page-handler="OrderRefunded" asp-route-orderId="@Model.OrderDetailsVM.OrderHeader.Id"><i class="fas fa-times"></i> Refund Order</button>
+                </div>
             </div>
+
+            }
+
+        </div>
 
         </div>
     </div>

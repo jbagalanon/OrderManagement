@@ -84,6 +84,6 @@ namespace Taste.Pages.Admin.Order
 
             return RedirectToPage("OrderList");
         }
-    }
+    
     }
 }
