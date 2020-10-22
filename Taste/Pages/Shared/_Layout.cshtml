@@ -68,6 +68,15 @@
                                 </a>
                             </li>
                         }
+                        
+                        @if (User.IsInRole(SD.CustomerRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-page="/Admin/Order/OrderList">
+                                    Order History
+                                </a>
+                            </li>
+                        }
 
                         @if ((HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart) != null))
                         {
