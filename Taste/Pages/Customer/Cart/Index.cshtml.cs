@@ -51,8 +51,7 @@ namespace Taste.Pages.Customer.Cart
                 //cart database condition retrieval
                 if (cart != null)
                 {
-                    OrderDetailsCartVM.listCart = cart.ToList()
-                    
+                    OrderDetailsCartVM.listCart = cart.ToList();
                 }
 
                 foreach (var cartList in OrderDetailsCartVM.listCart)
