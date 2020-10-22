@@ -9,8 +9,8 @@
     @if (Model.orderDetailsVM.Count > 0)
     {
         <div class="container row bg-white p-2 border mb-3 rounded">
-            
-            
+
+
             @foreach (var item in Model.orderDetailsVM)
             {
                 <div class="col-12 pb-3 pt-3 mt-4 border  rounded">
@@ -23,7 +23,7 @@
                                     {
 
                                         <li>@details.Name x @details.Count</li>
-                                    
+
                                     }
 
                                 </ul>
@@ -33,7 +33,7 @@
                                     <div class="input-group-append">
                                         <span class="input-group-text">Time</span>
                                     </div>
-                                    <input type="text" class="border rounded form-control" readonly value="@item.OrderHeader.PickUpTime"/>
+                                    <input type="text" class="border rounded form-control" readonly value="@item.OrderHeader.PickUpTime" />
                                 </div>
                                 @{
                                     var comments = item.OrderHeader.Comments;
@@ -47,10 +47,10 @@
                             </div>
                             <div class="col-3 offset-1 d-flex align-content-center">
                                 <div class="col-12">
-                                    
-                                    @*the button should not be visible all the timme*@ 
-                                    
-                                    
+
+                                    @*the button should not be visible all the timme*@
+
+
                                     @if (item.OrderHeader.Status.Equals(SD.StatusSubmitted))
                                     {
                                         <button type="submit" class="btn btn-primary form-control mb-3">
@@ -60,33 +60,22 @@
 
                                     else
                                     {
-                                        if (item.OrderHeader.Status.Equals(SD.StatusReady))
+                                        if (item.OrderHeader.Status.Equals(SD.StatusInProcess))
                                         {
                                             <button type="submit" class="btn btn-success form-control mb-3">
                                                 <i class="fas fa-flag-checkered"></i> &nbsp; Order Ready
                                             </button>
                                         }
-                                        else
-                                        {
-
-                                            if (item.OrderHeader.Status.Equals(SD.StatusCancelled))
-                                            {
-                                                <button type="submit" class="btn btn-warning form-control mb-3">
-                                                    <i class="fas fa-times"></i> &nbsp; Cancel Order
-                                                </button>
-                                            }
-                                            else
-                                            {
-                                                <button type="submit" class="btn btn-danger form-control mb-3">
-                                                    <i class="fas fa-times"></i> &nbsp; Refund Order
-                                                </button>
-                                            }
-                                      
-                                        }
-
+                                        
                                     }
-                                  
-                                  
+                                    <button type="submit" class="btn btn-warning form-control mb-3">
+                                        <i class="fas fa-times"></i> &nbsp; Cancel Order
+                                    </button>
+                                        
+                                    <button type="submit" class="btn btn-danger form-control mb-3">
+                                        <i class="fas fa-times"></i> &nbsp; Refund Order
+                                    </button>
+
                                 </div>
                             </div>
                         </div>
