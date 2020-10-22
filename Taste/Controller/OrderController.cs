@@ -23,7 +23,7 @@ namespace Taste.Controller
 
         public OrderController(IUnitOfWork unitOfWork)
         {
-            unitOfWork = _unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
