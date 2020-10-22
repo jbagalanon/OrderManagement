@@ -4,8 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Stripe;
 using Taste.DataAccess.Data.Repository.IRepository;
+using Taste.Models;
 using Taste.Models.ViewModels;
+using Taste.Utility;
 
 namespace Taste.Pages.Admin.Order
 {
@@ -34,5 +37,53 @@ namespace Taste.Pages.Admin.Order
             OrderDetailsVM.OrderHeader.ApplicationUser =
                 _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == OrderDetailsVM.OrderHeader.UserId);
         }
+
+          public IActionResult OnPostOrderConfirm(int orderId)
+        {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == orderId);
+
+            orderHeader.Status = SD.StatusCompleted;
+            _unitOfWork.Save();
+
+            return RedirectToPage("OrderList");
+        }
+
+        public IActionResult OnPostOrderCancel(int orderId)
+        {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == orderId);
+
+            orderHeader.Status = SD.StatusCancelled;
+            _unitOfWork.Save();
+
+            return RedirectToPage("OrderList");
+        }
+
+        public IActionResult OnPostOrderRefund(int orderId)
+        {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == orderId);
+
+            //refund the amount
+            //go to stripe and find the documentation in refund
+            //copy the post call in refunds documentation
+            // this is the code of refund
+            var options = new RefundCreateOptions
+            {
+                Amount = Convert.ToInt32(orderHeader.OrderTotal*100),
+                Reason = RefundReasons.RequestedByCustomer,
+                //something wrong with charge. I think that is ChargeId
+                Charge= orderHeader.TransactionId
+            };
+            var service = new RefundService();
+
+            //Refund refund = service.Create("myAPI coedes", refundOptions);
+            Refund refund = service.Create(options);
+
+
+            orderHeader.Status = SD.StatusRefunded;
+            _unitOfWork.Save();
+
+            return RedirectToPage("OrderList");
+        }
+    }
     }
 }
