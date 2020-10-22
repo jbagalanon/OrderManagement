@@ -47,7 +47,7 @@ namespace Taste.Pages.Admin.Order
 
         }
 
-        public IActionResult OnPostPrepare(int orderId)
+        public IActionResult OnPostOrderPrepare(int orderId)
         {
             OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == orderId);
 
