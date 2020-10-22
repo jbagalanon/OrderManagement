@@ -21,10 +21,10 @@ namespace Taste.Pages.Admin.Order
             _unitOfWork = unitOfWork;
         }
 
-        [BindProperty] 
+        [BindProperty]
         public List<OrderDetailsViewModel> orderDetailsVM { get; set; }
 
-      
+
         public void OnGet()
         {
             orderDetailsVM = new List<OrderDetailsViewModel>();
@@ -33,7 +33,7 @@ namespace Taste.Pages.Admin.Order
                     (o => o.Status == SD.StatusSubmitted || o.Status == SD.StatusInProcess)
                 .OrderByDescending(u => u.PickupName).ToList();
 
-            foreach (OrderHeader item in OrderHeaderList )
+            foreach (OrderHeader item in OrderHeaderList)
             {
                 OrderDetailsViewModel individual = new OrderDetailsViewModel
                 {
@@ -44,9 +44,50 @@ namespace Taste.Pages.Admin.Order
                 orderDetailsVM.Add(individual);
             }
 
-
         }
 
+        public IActionResult OnPostPrepare(int orderId)
+        {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == orderId);
+
+            orderHeader.Status = SD.StatusInProcess;
+            _unitOfWork.Save();
+
+            return RedirectToPage("ManageOrder");
+        }
+
+        public IActionResult OnPostOrderReady(int orderId)
+        {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == orderId);
+
+            orderHeader.Status = SD.StatusReady;
+            _unitOfWork.Save();
+
+            return RedirectToPage("ManageOrder");
+        }
+
+        public IActionResult OnPostOrderCancel(int orderId)
+        {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == orderId);
+
+            orderHeader.Status = SD.StatusCancelled;
+            _unitOfWork.Save();
+
+            return RedirectToPage("ManageOrder");
+        }
+
+        public IActionResult OnPostOrderRefund(int orderId)
+        {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == orderId);
+
+            //refund the amount
+
+
+            orderHeader.Status = SD.StatusRefunded;
+            _unitOfWork.Save();
+
+            return RedirectToPage("ManageOrder");
+        }
     }
 
 }
