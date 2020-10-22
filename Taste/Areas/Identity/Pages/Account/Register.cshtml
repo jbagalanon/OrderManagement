@@ -49,16 +49,22 @@
                             <input type="password" asp-for="Input.ConfirmPassword" autocomplete="off" placeholder="Confirm Password" class="form-control">
                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         </div>
-                        <div class="py-2">
-                            <input type="radio" name="rdUserRole" value="@SD.KitchenRole" /> @SD.KitchenRole
-                            <input type="radio" name="rdUserRole" value="@SD.CustomerRole" /> @SD.CustomerRole
-                            <input type="radio" name="rdUserRole" value="@SD.FrontDeskRole" /> @SD.FrontDeskRole
-                            <input type="radio" name="rdUserRole" value="@SD.ManagerRole" /> @SD.ManagerRole
-                        </div>
+
+                        @if (User.IsInRole(SD.ManagerRole))
+                        {
+
+
+                            <div class="py-2">
+                                <input type="radio" name="rdUserRole" value="@SD.KitchenRole" /> @SD.KitchenRole
+                                <input type="radio" name="rdUserRole" value="@SD.CustomerRole" /> @SD.CustomerRole
+                                <input type="radio" name="rdUserRole" value="@SD.FrontDeskRole" /> @SD.FrontDeskRole
+                                <input type="radio" name="rdUserRole" value="@SD.ManagerRole" /> @SD.ManagerRole
+                            </div>
+                        }
                         <div class="py-2">
                             <button type="submit" class="btn btn-success form-control">Register</button>
                         </div>
-                     
+
 
                     </form>
 
@@ -66,7 +72,7 @@
                         <p class="text-center">
                             By clicking <em>Register</em> you agree to our <a href="" target="_blank"> terms and conditions </a>
                         </p>
-                        <hr />  
+                        <hr />
                         <div class="row">
 
                             @foreach (var provider in Model.ExternalLogins)
