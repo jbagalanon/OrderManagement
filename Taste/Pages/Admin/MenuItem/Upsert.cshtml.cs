@@ -4,18 +4,21 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using Taste.DataAccess.Data.Repository.IRepository;
 using Taste.Models.ViewModels;
+using Taste.Utility;
 
 
 //Notes: When working in mvvm model, the stardard initialization of data must
  //be MVVM + Model + Id
 namespace Taste.Pages.Admin.MenuItem
 {
+    [Authorize(Roles = SD.ManagerRole)]
     public class UpsertModel : PageModel
     {
 

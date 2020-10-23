@@ -27,7 +27,9 @@ namespace Taste.Pages.Customer.Cart
         {
             OrderDetailsCartVM = new OrderDetailsCart()
             {
-                OrderHeader = new Models.OrderHeader()
+                OrderHeader = new Models.OrderHeader(),
+                //if claim is null, it must ne a new empty shopping cart to avoid the error
+                listCart = new List<ShoppingCart>()
             };
 
             //initialialized order details
@@ -36,28 +38,36 @@ namespace Taste.Pages.Customer.Cart
 
             //retrieving shopping card in database
             var claimsIdentity = (ClaimsIdentity) User.Identity;
+
+            // this claim directly go to database it must be null unless login
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            
 
-            //retrieve data from database
-            IEnumerable<ShoppingCart> cart = _unitOfWork.ShoppingCart.GetAll
-                (s => s.ApplicationUserId == claim.Value);
-
-            //cart database condition retrieval
-            if (cart != null)
+            if (claim != null)
             {
-                OrderDetailsCartVM.listCart = cart.ToList();
+                //retrieve data from database
+                IEnumerable<ShoppingCart> cart = _unitOfWork.ShoppingCart.GetAll
+                    (s => s.ApplicationUserId == claim.Value);
+
+                //cart database condition retrieval
+                if (cart != null)
+                {
+                    OrderDetailsCartVM.listCart = cart.ToList();
+                }
+
+                foreach (var cartList in OrderDetailsCartVM.listCart)
+                {
+                    cartList.MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == cartList.MenuItemId);
+                    //get total multiply to item price to item count
+                    //?     OrderDetailsCartVM.OrderHeader.OrderTotal += cartList.MenuItem.Price * cartList.Count;
+                    OrderDetailsCartVM.OrderHeader.OrderTotal += cartList.MenuItem.Price;
+                }
             }
 
-            foreach (var cartList in OrderDetailsCartVM.listCart)
-            {
-                cartList.MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == cartList.MenuItemId);
-                //get total multiply to item price to item count
-
-                OrderDetailsCartVM.OrderHeader.OrderTotal += cartList.MenuItem.Price;
-            }
+           
         }
 
+
+        //this is for post handler plus minus and delete
         public IActionResult OnPostPlus(int cartId)
         {
             var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(c => c.Id == cartId);
@@ -67,6 +77,8 @@ namespace Taste.Pages.Customer.Cart
             _unitOfWork.Save();
             return RedirectToPage("/Customer/Cart/Index");
         }
+
+        //post handler for minus
 
         public IActionResult OnPostMinus(int cartId)
         {

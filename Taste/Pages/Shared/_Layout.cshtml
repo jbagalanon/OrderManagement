@@ -41,17 +41,44 @@
 
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item " asp-area="" asp-page="/Admin/Category/Index">Category</a>
-
                                     <a class="dropdown-item" asp-area="" asp-page="/Admin/FoodType/Index">Food Type</a>
-
                                     <a class="dropdown-item" asp-area="" asp-page="/Admin/MenuItem/Index">Menu Item</a>
-
                                     <a class="dropdown-item" asp-area="" asp-page="/Admin/User/Index">Users</a>
                                 </div>
 
                             </li>
                         }
-                        @if ((HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart)!=null))
+
+                        @*Adding menu*@
+
+                        @if (User.IsInRole(SD.ManagerRole) || User.IsInRole(SD.KitchenRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-page="/Admin/Order/ManageOrder">
+                                    Manage Order
+                                </a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole(SD.ManagerRole) || User.IsInRole(SD.FrontDeskRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-page="/Admin/Order/OrderList">
+                                    Order Pickup
+                                </a>
+                            </li>
+                        }
+                        
+                        @if (User.IsInRole(SD.CustomerRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-page="/Admin/Order/OrderList">
+                                    Order History
+                                </a>
+                            </li>
+                        }
+
+                        @if ((HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart) != null))
                         {
                             <li>
                                 <a asp-page="/Customer/Cart/Index" class="nav-link text-white-50">

@@ -35,6 +35,7 @@ namespace Taste
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -51,9 +52,11 @@ namespace Taste
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             //add mvc
-            services.AddMvc(options =>
-                    options.EnableEndpointRouting = false)
-                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+            //services.AddMvc(options =>
+            //        options.EnableEndpointRouting = false)
+            //    .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+
+            services.AddRazorPages();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
@@ -96,12 +99,20 @@ namespace Taste
             app.UseSession();
             app.UseRouting();
 
+
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
 
 
             //delete endpoint routing considering mvc have both razor and mvc embedded 
-            app.UseMvc();
+            //app.UseMvc();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
+            });
             StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
         }
     }
